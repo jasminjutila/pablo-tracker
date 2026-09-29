@@ -1,0 +1,449 @@
+:root {
+  --bg: #f6f1ea;
+  --card: #ffffff;
+  --text: #3b3229;
+  --muted: #8d8177;
+  --accent: #8a6d4f;
+  --green: #4c9a62;
+  --red: #d05043;
+  --yellow: #e9b64c;
+  --line: #f0e9e0;
+  --green-soft: #e3f1e6;
+  --red-soft: #fdecea;
+  --yellow-soft: #fdf6e3;
+  --header-a: #8a6d4f;
+  --header-b: #6f563e;
+  --track: #eee6dc;
+  --btn-pissa: #fff9e8;
+  --btn-kakka: #f4ece2;
+  --btn-ruoka: #edf5ee;
+  --btn-leikki: #eaf1f7;
+  --btn-tyhja: #f1efec;
+  --input-border: #e3dbd0;
+  --hover-tint: #ece4d8;
+  --del: #c9beb2;
+  --toast-bg: #3b3229;
+  --toast-text: #ffffff;
+  --bar-fill: #8a6d4f;
+  --card-border: transparent;
+  --radius: 18px;
+}
+
+/* Tumma tila: lämmin tumma paletti (järjestelmäasetus tai data-theme) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101011; --card: #191a1c; --card-border: rgba(255, 255, 255, .07);
+    --text: #ececee; --muted: #9a9aa0;
+    --accent: #d9a86a; --green: #66c584; --red: #ef6f61; --yellow: #ecc056;
+    --line: #26272a; --green-soft: #1c2b21; --red-soft: #2f1d1b; --yellow-soft: #2c2517;
+    --header-a: #221c14; --header-b: #151310;
+    --track: #26272a;
+    --btn-pissa: #262115; --btn-kakka: #241f1b; --btn-ruoka: #17231b; --btn-leikki: #16202b; --btn-tyhja: #1e1f21;
+    --input-border: #303136; --hover-tint: #232428; --del: #6b6c72;
+    --toast-bg: #ececee; --toast-text: #111112;
+    --bar-fill: #d9a86a;
+  }
+}
+:root[data-theme="dark"] {
+    --bg: #101011; --card: #191a1c; --card-border: rgba(255, 255, 255, .07);
+    --text: #ececee; --muted: #9a9aa0;
+    --accent: #d9a86a; --green: #66c584; --red: #ef6f61; --yellow: #ecc056;
+    --line: #26272a; --green-soft: #1c2b21; --red-soft: #2f1d1b; --yellow-soft: #2c2517;
+    --header-a: #221c14; --header-b: #151310;
+    --track: #26272a;
+    --btn-pissa: #262115; --btn-kakka: #241f1b; --btn-ruoka: #17231b; --btn-leikki: #16202b; --btn-tyhja: #1e1f21;
+    --input-border: #303136; --hover-tint: #232428; --del: #6b6c72;
+    --toast-bg: #ececee; --toast-text: #111112;
+    --bar-fill: #d9a86a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: calc(14px + env(safe-area-inset-top)) 18px 14px;
+  background: linear-gradient(160deg, var(--header-a), var(--header-b));
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(59, 50, 41, .18);
+  position: relative;
+  z-index: 1;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  border: 2.5px solid rgba(255,255,255,.8);
+}
+
+.head-text { flex: 1; }
+h1 { font-size: 24px; font-weight: 700; }
+.age { font-size: 13px; opacity: .85; }
+
+.bell {
+  font-size: 22px;
+  background: rgba(255,255,255,.15);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+}
+.bell.on { background: rgba(255,255,255,.9); }
+
+main { padding: 14px; max-width: 520px; margin: 0 auto; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+
+/* Ennuste */
+.prediction { text-align: center; }
+.pred-title { font-size: 21px; font-weight: 700; margin-bottom: 10px; }
+.prediction.due { background: var(--red-soft); }
+.prediction.due .pred-title { color: var(--red); }
+.prediction.soon { background: var(--yellow-soft); }
+
+.progress {
+  height: 10px;
+  background: var(--track);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.bar {
+  height: 100%;
+  width: 0%;
+  background: var(--green);
+  border-radius: 6px;
+  transition: width .6s ease, background-color .4s ease;
+}
+.prediction.soon .bar { background: var(--yellow); }
+.prediction.due .bar { background: var(--red); }
+.pred-detail {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+  text-wrap: balance;
+  max-width: 42ch;
+  margin: 0 auto;
+}
+
+/* Pikanapit */
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.log-btn {
+  font-size: 34px;
+  padding: 18px 0 12px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: transform .1s;
+}
+.log-btn:active { transform: scale(.95); }
+.log-btn span { font-size: 15px; font-weight: 600; }
+.log-btn.pissa { background: var(--btn-pissa); }
+.log-btn.kakka { background: var(--btn-kakka); }
+.log-btn.ruoka { background: var(--btn-ruoka); }
+.log-btn.leikki { background: var(--btn-leikki); }
+.log-btn.tyhja { background: var(--btn-tyhja); }
+.log-btn.wide {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  justify-content: center;
+  gap: 8px;
+  font-size: 22px;
+  padding: 14px 0;
+}
+.log-btn.wide span { font-size: 14px; }
+
+/* Jälkikäteen kirjaus */
+.late-btn {
+  display: block;
+  margin: 0 auto 14px;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.late-time-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 4px 2px 10px;
+}
+.late-time-label input {
+  font-size: 18px;
+  padding: 8px 12px;
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  background: var(--bg);
+  font-family: inherit;
+}
+.late-types {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.late-types button {
+  font-size: 24px;
+  padding: 12px 0 8px;
+  border: none;
+  border-radius: 12px;
+  background: var(--bg);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.late-types button span { font-size: 11px; font-weight: 600; }
+
+/* Sijainti-valinta */
+.sheet {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 50;
+}
+.sheet.hidden { display: none; }
+.sheet-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-bottom: none;
+  border-radius: 22px 22px 0 0;
+  padding: 22px 18px calc(26px + env(safe-area-inset-bottom));
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sheet-title { font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 6px; }
+.loc-btn {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+}
+.loc-btn.ulkona { background: var(--green-soft); color: var(--green); }
+.loc-btn.sisalla { background: var(--red-soft); color: var(--red); }
+.loc-cancel {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 15px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Päivänavigointi + aikajana */
+.day-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.day-nav button {
+  font-size: 22px;
+  border: none;
+  background: var(--bg);
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  color: var(--accent);
+}
+.day-nav button:disabled { opacity: .3; }
+#day-label { font-weight: 700; font-size: 16px; }
+
+.day-summary {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.timeline { list-style: none; }
+.timeline li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 2px;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+}
+.timeline li:last-child { border-bottom: none; }
+.timeline .emoji { font-size: 20px; }
+.timeline .time { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 48px; }
+.timeline .label { flex: 1; }
+.timeline .loc-tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.loc-tag.ulkona { background: var(--green-soft); color: var(--green); }
+.loc-tag.sisalla { background: var(--red-soft); color: var(--red); }
+.timeline .del {
+  border: none;
+  background: none;
+  color: var(--del);
+  font-size: 17px;
+  cursor: pointer;
+  padding: 12px 14px;
+  margin: -8px -6px;
+}
+.empty { color: var(--muted); text-align: center; padding: 14px 0; font-size: 14px; }
+
+/* Tilastot */
+h2 { font-size: 16px; margin-bottom: 10px; }
+.stats { font-size: 14px; }
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-row b { font-variant-numeric: tabular-nums; }
+
+.footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 8px 0 24px;
+}
+
+/* Interaktiiviset tilat (työpöytä: hover; näppäimistö: focus) */
+.log-btn, .bell, .day-nav button, .late-btn, .loc-btn, .late-types button, .timeline .del {
+  transition: transform .1s, box-shadow .15s, background .15s, color .15s, filter .15s;
+}
+@media (hover: hover) {
+  .log-btn:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,.10); }
+  .bell:hover { background: rgba(255,255,255,.28); }
+  .bell.on:hover { background: #fff; }
+  .day-nav button:hover:not(:disabled) { background: var(--hover-tint); }
+  .late-btn:hover { background: var(--hover-tint); border-radius: 10px; }
+  .loc-btn:hover, .late-types button:hover { filter: brightness(.96); }
+  .loc-cancel:hover { color: var(--text); }
+  .timeline .del:hover { color: var(--red); }
+}
+:where(button, input):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--toast-bg);
+  color: var(--toast-text);
+  padding: 12px 22px;
+  border-radius: 24px;
+  font-size: 15px;
+  z-index: 100;
+  transition: opacity .3s;
+}
+.toast.hidden { opacity: 0; pointer-events: none; }
+
+/* Luurankolataus */
+.skel {
+  display: inline-block;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--track) 25%, var(--card) 50%, var(--track) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s linear infinite;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+.skel-row { display: block; height: 14px; margin: 10px 0; }
+
+/* Päiväyhteenvedon sirut */
+.day-summary { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
+.chip {
+  background: var(--bg);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+.chip .n { font-variant-numeric: tabular-nums; }
+.chip.zero { opacity: .45; font-weight: 500; }
+
+/* Treenitila (kuiva putki / kiristys) */
+.train-state {
+  display: inline-flex;
+  margin-top: 10px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.train-state.good { background: var(--green-soft); color: var(--green); }
+.train-state.warn { background: var(--red-soft); color: var(--red); }
+.train-state.hidden { display: none; }
+
+/* Opitut pissavälit -mittari */
+.tod-chart .tc-title {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  margin: 14px 0 8px;
+}
+.tod-row {
+  display: grid;
+  grid-template-columns: 78px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+}
+.tod-row .tl { font-size: 12.5px; color: var(--muted); }
+.tod-row .tv { font-size: 12.5px; color: var(--text); font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tod-bar { height: 8px; border-radius: 0 4px 4px 0; background: var(--bar-fill); min-width: 4px; }
+
+/* Liikeherkkyys */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

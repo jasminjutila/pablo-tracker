@@ -1,0 +1,17 @@
+{
+  "name": "pablo-tracker",
+  "version": "1.0.0",
+  "description": "Pablo-päiväkirja – MAS-pennun vessa-, ruoka- ja leikkiloki",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@google-cloud/firestore": "^7.10.0",
+    "express": "^4.21.0",
+    "web-push": "^3.6.7"
+  }
+}

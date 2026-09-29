@@ -1,0 +1,5 @@
+node_modules
+.git
+pablo-original.jpeg
+vapid.pem
+*.md

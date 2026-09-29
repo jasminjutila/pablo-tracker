@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>Pablo 🐶</title>
+  <meta name="theme-color" content="#8a6d4f" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#332818" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Pablo">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header>
+    <img src="./pablo.jpeg" alt="Pablo" class="avatar">
+    <div class="head-text">
+      <h1>Pablo</h1>
+      <div id="age" class="age"></div>
+    </div>
+    <button id="bell" class="bell" title="Ilmoitukset">🔔</button>
+  </header>
+
+  <main>
+    <!-- Ennuste -->
+    <section id="prediction" class="card prediction">
+      <div id="pred-title" class="pred-title"><span class="skel" style="width:65%;height:21px"></span></div>
+      <div class="progress"><div id="pred-bar" class="bar"></div></div>
+      <div id="pred-detail" class="pred-detail"><span class="skel" style="width:80%;height:13px"></span></div>
+      <div id="train-state" class="train-state hidden"></div>
+    </section>
+
+    <!-- Pikanapit -->
+    <section class="buttons">
+      <button class="log-btn pissa" data-type="pissa">💛<span>Pissa</span></button>
+      <button class="log-btn kakka" data-type="kakka">💩<span>Kakka</span></button>
+      <button class="log-btn ruoka" data-type="ruoka">🍖<span>Ruoka</span></button>
+      <button class="log-btn leikki" data-type="leikki">🎾<span>Leikki</span></button>
+      <button class="log-btn tyhja wide" data-type="tyhja">🐾<span>Käytiin ulkona – ei tullut mitään</span></button>
+    </section>
+
+    <button id="late-btn" class="late-btn">🕐 Kirjaa jälkikäteen</button>
+
+    <!-- Jälkikäteen kirjaus -->
+    <div id="late-sheet" class="sheet hidden">
+      <div class="sheet-card">
+        <div class="sheet-title">🕐 Kirjaa jälkikäteen</div>
+        <label class="late-time-label">Kellonaika
+          <input type="time" id="late-time">
+        </label>
+        <div class="late-types">
+          <button data-type="pissa">💛<span>Pissa</span></button>
+          <button data-type="kakka">💩<span>Kakka</span></button>
+          <button data-type="ruoka">🍖<span>Ruoka</span></button>
+          <button data-type="leikki">🎾<span>Leikki</span></button>
+          <button data-type="tyhja">🐾<span>Tyhjä</span></button>
+        </div>
+        <button id="late-cancel" class="loc-cancel">Peruuta</button>
+      </div>
+    </div>
+
+    <!-- Ulkona / sisällä -valinta -->
+    <div id="loc-sheet" class="sheet hidden">
+      <div class="sheet-card">
+        <div id="loc-title" class="sheet-title"></div>
+        <button id="loc-ulkona" class="loc-btn ulkona">🌳 Ulkona</button>
+        <button id="loc-sisalla" class="loc-btn sisalla">🏠 Sisällä (vahinko)</button>
+        <button id="loc-cancel" class="loc-cancel">Peruuta</button>
+      </div>
+    </div>
+
+    <!-- Päivän tapahtumat -->
+    <section class="card">
+      <div class="day-nav">
+        <button id="prev-day">‹</button>
+        <div id="day-label">Tänään</div>
+        <button id="next-day">›</button>
+      </div>
+      <div id="day-summary" class="day-summary"></div>
+      <ul id="timeline" class="timeline"></ul>
+    </section>
+
+    <!-- Tilastot -->
+    <section class="card">
+      <h2>Tilastot (7 pv)</h2>
+      <div id="stats" class="stats">
+        <span class="skel skel-row" style="width:90%"></span>
+        <span class="skel skel-row" style="width:75%"></span>
+        <span class="skel skel-row" style="width:82%"></span>
+      </div>
+      <div id="tod-chart" class="tod-chart"></div>
+    </section>
+
+    <p class="footer">Pablo · MAS · s. 28.4.2026 🐾</p>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
